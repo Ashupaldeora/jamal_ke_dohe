@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jamal_ke_dohe/screens/home/view/components/favourites.dart';
 import 'package:jamal_ke_dohe/theme/theme_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -14,6 +15,7 @@ class HomeScreen extends StatelessWidget {
       child: Scaffold(
         // backgroundColor: Theme.of(context).colorScheme.background,
         appBar: AppBar(
+          backgroundColor: Colors.transparent,
           toolbarHeight: 80,
           title: Text('जमाल के दोहे'),
           centerTitle: true,
@@ -70,7 +72,7 @@ class HomeScreen extends StatelessWidget {
         body: TabBarView(
           children: [
             AllDoha(),
-            Center(child: Text('Content for पसंदीदा')),
+            Favourites(),
           ],
         ),
       ),

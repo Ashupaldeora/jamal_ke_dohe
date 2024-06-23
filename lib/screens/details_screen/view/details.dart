@@ -7,8 +7,8 @@ import 'package:provider/provider.dart';
 import '../../home/provider/home_provider.dart';
 
 class DetailsScreen extends StatelessWidget {
-  const DetailsScreen({super.key});
-
+  DetailsScreen({super.key, required this.initialIndex});
+  final int initialIndex;
   @override
   Widget build(BuildContext context) {
     final providerTrue = Provider.of<HomeProvider>(context);
@@ -18,6 +18,28 @@ class DetailsScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         toolbarHeight: 80,
+        actions: [
+          PopupMenuButton(
+            icon: Icon(Icons.translate),
+            onSelected: (value) {
+              providerFalse.updateSelectedLanguage(value);
+            },
+            itemBuilder: (context) => [
+              const PopupMenuItem<String>(
+                value: 'hindi',
+                child: Text('Hindi'),
+              ),
+              const PopupMenuItem<String>(
+                value: 'english',
+                child: Text('English'),
+              ),
+              const PopupMenuItem<String>(
+                value: 'gujarati',
+                child: Text('Gujarati'),
+              ),
+            ],
+          )
+        ],
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
@@ -90,15 +112,25 @@ class DetailsScreen extends StatelessWidget {
                             ),
                             Expanded(
                               child: Text(
-                                  Provider.of<HomeProvider>(context)
-                                      .data[index]
-                                      .hindi,
+                                  (providerTrue.selectedLanguage == "english")
+                                      ? Provider.of<HomeProvider>(context)
+                                          .data[index]
+                                          .english
+                                      : (providerTrue.selectedLanguage ==
+                                              "gujarati")
+                                          ? Provider.of<HomeProvider>(context)
+                                              .data[index]
+                                              .gujarati
+                                          : Provider.of<HomeProvider>(context)
+                                              .data[index]
+                                              .hindi,
                                   overflow: TextOverflow.fade,
+                                  // textAlign: TextAlign.start,
                                   style: GoogleFonts.poppins(
                                     textStyle: TextStyle(
-                                        color: Colors.grey,
+                                        color: Colors.grey.shade400,
                                         fontSize: 18,
-                                        fontWeight: FontWeight.w600),
+                                        fontWeight: FontWeight.w500),
                                   )),
                             )
                           ],
@@ -112,6 +144,9 @@ class DetailsScreen extends StatelessWidget {
                                 onPressed: () {
                                   providerFalse.changeFavourite(
                                       isFavorite, index);
+                                  Provider.of<HomeProvider>(context,
+                                          listen: false)
+                                      .updateFavouriteIndices();
                                 },
                                 icon: (Icon(
                                   isFavorite
@@ -126,6 +161,7 @@ class DetailsScreen extends StatelessWidget {
                   );
                 },
                 options: CarouselOptions(
+                  initialPage: initialIndex,
                   scrollDirection: Axis.horizontal,
                   viewportFraction: 1,
                   height: 600,
