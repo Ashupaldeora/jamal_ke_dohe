@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/dohas_data.dart';
 
@@ -27,6 +28,7 @@ class HomeProvider extends ChangeNotifier {
         .where((entry) => entry.value == true)
         .map((entry) => entry.key)
         .toList();
+
     notifyListeners();
   }
 

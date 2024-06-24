@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -111,27 +112,35 @@ class DetailsScreen extends StatelessWidget {
                                   fontWeight: FontWeight.w600),
                             ),
                             Expanded(
-                              child: Text(
-                                  (providerTrue.selectedLanguage == "english")
-                                      ? Provider.of<HomeProvider>(context)
-                                          .data[index]
-                                          .english
-                                      : (providerTrue.selectedLanguage ==
-                                              "gujarati")
+                              child: SizedBox(
+                                height: 300,
+                                child: SingleChildScrollView(
+                                  child: Text(
+                                      (providerTrue.selectedLanguage ==
+                                              "english")
                                           ? Provider.of<HomeProvider>(context)
                                               .data[index]
-                                              .gujarati
-                                          : Provider.of<HomeProvider>(context)
-                                              .data[index]
-                                              .hindi,
-                                  overflow: TextOverflow.fade,
-                                  // textAlign: TextAlign.start,
-                                  style: GoogleFonts.poppins(
-                                    textStyle: TextStyle(
-                                        color: Colors.grey.shade400,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w500),
-                                  )),
+                                              .english
+                                          : (providerTrue.selectedLanguage ==
+                                                  "gujarati")
+                                              ? Provider.of<HomeProvider>(
+                                                      context)
+                                                  .data[index]
+                                                  .gujarati
+                                              : Provider.of<HomeProvider>(
+                                                      context)
+                                                  .data[index]
+                                                  .hindi,
+                                      overflow: TextOverflow.clip,
+                                      // textAlign: TextAlign.start,
+                                      style: GoogleFonts.poppins(
+                                        textStyle: TextStyle(
+                                            color: Colors.grey.shade500,
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w500),
+                                      )),
+                                ),
+                              ),
                             )
                           ],
                         ),

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../details_screen/view/details.dart';
 import '../../provider/home_provider.dart';
 
 class Favourites extends StatelessWidget {
@@ -19,7 +20,17 @@ class Favourites extends StatelessWidget {
             itemBuilder: (context, index) {
               return GestureDetector(
                 onTap: () {
-                  Navigator.of(context).pushNamed('/details');
+                  Provider.of<HomeProvider>(context, listen: false).updateIndex(
+                      Provider.of<HomeProvider>(context, listen: false)
+                          .favoriteIndices[index]);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DetailsScreen(
+                          initialIndex: Provider.of<HomeProvider>(context)
+                              .favoriteIndices[index]),
+                    ),
+                  );
                 },
                 child: Container(
                   padding:
